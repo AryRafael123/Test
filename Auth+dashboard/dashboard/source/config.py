@@ -113,10 +113,10 @@ class ProductionConfig(Config):
     TESTING = False
     
     # Production database
-    SQLALCHEMY_DATABASE_URI = os.environ.get(
-        'DATABASE_URL',
-        'postgresql://user:password@production-db:5432/resource_manager_prod'
-    )
+    #SQLALCHEMY_DATABASE_URI = os.environ.get(
+    #    'DATABASE_URL',
+    #    'postgresql://user:password@production-db:5432/resource_manager_prod'
+    #)
     
     # Security settings for production
     SESSION_COOKIE_SECURE = True
@@ -136,11 +136,7 @@ class ProductionConfig(Config):
 
 class DockerConfig(DevelopmentConfig):
     """Docker-specific configuration"""
-    SQLALCHEMY_DATABASE_URI = os.environ.get(
-        'DATABASE_URL', 
-        'postgresql://user:password@db:5432/resource_manager'
-    )
-    
+
     # Use service names for inter-container communication
     DASHBOARD_SERVICE_URL = os.environ.get('DASHBOARD_SERVICE_URL', 'http://dashboard:5001')
     #RABBITMQ_URL = os.environ.get('RABBITMQ_URL', 'amqp://guest:guest@rabbitmq:5672/')

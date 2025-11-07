@@ -177,7 +177,7 @@ class DockerConfig(DevelopmentConfig):
     """Docker-specific configuration"""
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         'DATABASE_URL', 
-        'mysql+mysqldb://root:mysqlpassword123@auth:3306/orchestratorAuth'
+        'mysql+mysqldb://root:mysqlpassword123@db:3306/orchestratorAuth'
     )
     
     # Docker service discovery

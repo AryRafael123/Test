@@ -10,16 +10,6 @@ services:
     depends_on:
       - db
 
-  db:
-    image: mysql:8.0
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=orchestratorAuth
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=mysqlpassword123
-    volumes:
-      - db_data:/var/lib/mysql
-
   dashboard:
     build:
       context: ./dashboard
@@ -28,6 +18,14 @@ services:
       - "5001:5001"
     depends_on:
       - auth
+
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysqlpassword123
+      - MYSQL_DATABASE=orchestratorAuth
+    volumes:
+      - db_data:/var/lib/mysql
 
 volumes:
   db_data:
