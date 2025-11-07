@@ -19,8 +19,6 @@ def create_app():
     
     db.init_app(app)
 
-    from .models import User  # Import User model for authentication
-
     # Import and register models within app context
     with app.app_context():
         db.create_all()

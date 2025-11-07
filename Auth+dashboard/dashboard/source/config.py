@@ -40,8 +40,7 @@ class Config:
     SERVICE_VERSION = '1.0.0'
     
     # External Services
-    AUTH_SERVICE_URL = os.environ.get('AUTH_SERVICE_URL', 'http://auth-service:5000')
-    MONITORING_SERVICE_URL = os.environ.get('MONITORING_SERVICE_URL', 'http://monitoring-service:5000')
+    AUTH_SERVICE_URL = os.environ.get('AUTH_SERVICE_URL', 'http://auth:5000')
     
     # Rate Limiting
     RATELIMIT_STORAGE_URL = os.environ.get('REDIS_URL', 'memory://')
@@ -143,9 +142,9 @@ class DockerConfig(DevelopmentConfig):
     )
     
     # Use service names for inter-container communication
-    AUTH_SERVICE_URL = os.environ.get('AUTH_SERVICE_URL', 'http://auth-service:5000')
-    RABBITMQ_URL = os.environ.get('RABBITMQ_URL', 'amqp://guest:guest@rabbitmq:5672/')
-    REDIS_URL = os.environ.get('REDIS_URL', 'redis://redis:6379/0')
+    DASHBOARD_SERVICE_URL = os.environ.get('DASHBOARD_SERVICE_URL', 'http://dashboard:5001')
+    #RABBITMQ_URL = os.environ.get('RABBITMQ_URL', 'amqp://guest:guest@rabbitmq:5672/')
+    #REDIS_URL = os.environ.get('REDIS_URL', 'redis://redis:6379/0')
 
 
 # Configuration dictionary
