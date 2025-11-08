@@ -1,4 +1,16 @@
 services:
+  # MySQL Database
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-database
+    environment:
+      MYSQL_ROOT_PASSWORD: mysqlpassword123
+      MYSQL_DATABASE: orchestratorAuth
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
   auth:
     build:
       context: ./auth
@@ -6,9 +18,9 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - DATABASE_URL=mysql+mysqldb://root:mysqlpassword123@db/orchestratorAuth
+      - DATABASE_URL=mysql+mysqldb://root:mysqlpassword123@mysql-db:3306/orchestratorAuth
     depends_on:
-      - db
+      - mysql-db
 
   dashboard:
     build:
@@ -18,14 +30,6 @@ services:
       - "5001:5001"
     depends_on:
       - auth
-
-  db:
-    image: mysql:8.0
-    environment:
-      - MYSQL_ROOT_PASSWORD=mysqlpassword123
-      - MYSQL_DATABASE=orchestratorAuth
-    volumes:
-      - db_data:/var/lib/mysql
 
 volumes:
   db_data:
