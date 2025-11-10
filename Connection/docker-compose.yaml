@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  # MySQL Database
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-database
+    environment:
+      MYSQL_ROOT_PASSWORD: mysqlpassword123
+      MYSQL_DATABASE: orchestratorAuth
+    volumes:
+      - mysql_data:/var/lib/mysql
+    # No need to expose port 3306 to host unless needed
+    # ports:
+    #   - "3307:3306"
+
+  # Authentication Service
+  auth:
+    build:
+      context: ./auth
+    container_name: auth
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=mysql+pymysql://root:mysqlpassword123@mysql-db:3306/orchestratorAuth
+    depends_on:
+      - mysql-db
+
+  # Dashboard Service
+  dashboard:
+    build:
+      context: ./dashboard
+    container_name: dashboard
+    ports:
+      - "5001:5001"
+    depends_on:
+      - auth
+
+volumes:
+  mysql_data:
