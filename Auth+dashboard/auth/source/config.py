@@ -177,7 +177,7 @@ class DockerConfig(DevelopmentConfig):
     """Docker-specific configuration"""
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         'DATABASE_URL', 
-        'mysql+mysqldb://root:mysqlpassword123@db:3306/orchestratorAuth'
+        'mysql+mysqldb://root:mysqlpassword123@mysql-db:3306/orchestratorAuth'
     )
     
     # Docker service discovery
@@ -215,5 +215,5 @@ config = {
 
 def get_config():
     """Get configuration based on environment"""
-    env = os.environ.get('FLASK_ENV', 'development')
-    return config.get(env, config['default'])
+    env = os.environ.get('FLASK_ENV', 'docker ')
+    return config.get(env, config['docker'])

@@ -4,12 +4,14 @@ services:
     image: mysql:8.0
     container_name: mysql-database
     environment:
-      MYSQL_ROOT_PASSWORD: mysqlpassword123
-      MYSQL_DATABASE: orchestratorAuth
+      MYSQL_ROOT_PASSWORD: mysqlpassword123 # REQUIRED - creates root user with this password
+      MYSQL_DATABASE: orchestratorAuth # OPTIONAL - creates database automatically
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - backend
 
   auth:
     build:
@@ -21,6 +23,8 @@ services:
       - DATABASE_URL=mysql+mysqldb://root:mysqlpassword123@mysql-db:3306/orchestratorAuth
     depends_on:
       - mysql-db
+    networks:
+      - backend
 
   dashboard:
     build:
@@ -30,6 +34,11 @@ services:
       - "5001:5001"
     depends_on:
       - auth
+    networks:
+      - backend
+
+  networks:
+      - backend
 
 volumes:
-  db_data:
+  mysql_data:

@@ -138,7 +138,7 @@ class DockerConfig(DevelopmentConfig):
     """Docker-specific configuration"""
 
     # Use service names for inter-container communication
-    DASHBOARD_SERVICE_URL = os.environ.get('DASHBOARD_SERVICE_URL', 'http://dashboard:5001')
+    AUTH_SERVICE_URL = os.environ.get('AUTH_SERVICE_URL', 'http://auth:5000')
     #RABBITMQ_URL = os.environ.get('RABBITMQ_URL', 'amqp://guest:guest@rabbitmq:5672/')
     #REDIS_URL = os.environ.get('REDIS_URL', 'redis://redis:6379/0')
 
@@ -155,5 +155,5 @@ config = {
 
 def get_config():
     """Get configuration based on environment"""
-    env = os.environ.get('FLASK_ENV', 'development')
-    return config.get(env, config['default'])
+    env = os.environ.get('FLASK_ENV', 'docker')
+    return config.get(env, config['docker'])
