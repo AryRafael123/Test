@@ -1,7 +1,6 @@
 version: "3.9"
 
 services:
-  # MySQL Database
   mysql-db:
     image: mysql:8.0
     container_name: mysql-database
@@ -10,11 +9,13 @@ services:
       MYSQL_DATABASE: orchestratorAuth
     volumes:
       - mysql_data:/var/lib/mysql
-    # No need to expose port 3306 to host unless needed
-    # ports:
-    #   - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pmysqlpassword123"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
 
-  # Authentication Service
   auth:
     build:
       context: ./auth
@@ -24,9 +25,9 @@ services:
     environment:
       - DATABASE_URL=mysql+pymysql://root:mysqlpassword123@mysql-db:3306/orchestratorAuth
     depends_on:
-      - mysql-db
+      mysql-db:
+        condition: service_healthy
 
-  # Dashboard Service
   dashboard:
     build:
       context: ./dashboard
