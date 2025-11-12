@@ -1,7 +1,9 @@
 from sqlalchemy.exc import IntegrityError
-from flask import Blueprint, Flask, app, render_template, request, redirect, url_for, jsonify
+from flask import Blueprint, Flask, app, render_template, request, redirect, url_for, jsonify, current_app
 from flask import session
 from flask_login import login_user, current_user
+import jwt
+import datetime
 
 main = Blueprint('main', __name__)
 
@@ -18,9 +20,9 @@ def home():
 
         if user_data[1] == True:
             token = jwt.encode({
-                'sub': username,
+                'sub': username_form,
                 'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)
-            }, SECRET_KEY, algorithm='HS256')
+            }, current_app.config['SECRET_KEY'], algorithm='HS256')
             response = redirect("http://localhost/dashboard")
             response.set_cookie("access_token", token, httponly=True)
             return response
