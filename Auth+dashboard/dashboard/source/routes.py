@@ -7,7 +7,7 @@ from flask_login import login_user, current_user
 main = Blueprint('main', __name__)
 
 
-@app.route('/dashboard' ,methods=['GET'])
+@main.route('/dashboard' ,methods=['GET'])
 def dashboard():
     auth_header = request.headers.get('Authorization')
     if not auth_header or not auth_header.startswith('Bearer '):

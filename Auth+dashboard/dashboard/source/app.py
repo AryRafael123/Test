@@ -30,8 +30,9 @@ def create_app():
     # You'll also need a user_loader callback
     @login_manager.user_loader
     def load_user(id):
+        pass
         # Your code to load a user from the user_id
-        return User.query.get(int(id))  # Example - replace with your actual user loading
+        #return User.query.get(int(id))  # Example - replace with your actual user loading
 
 
     # Register blueprints/controllers
