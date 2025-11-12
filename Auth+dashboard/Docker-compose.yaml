@@ -43,8 +43,8 @@ services:
     networks:
       - backend
 
-networks:
-  backend:
+  networks:
+      - backend
 
 volumes:
   mysql_data:

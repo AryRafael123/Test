@@ -215,5 +215,5 @@ config = {
 
 def get_config():
     """Get configuration based on environment"""
-    env = os.environ.get('FLASK_ENV', 'docker ')
+    env = os.environ.get('FLASK_ENV', 'docker')
     return config.get(env, config['docker'])
